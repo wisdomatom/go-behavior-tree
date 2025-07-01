@@ -24,6 +24,7 @@ type NodeInstance struct {
 	Blackboard  interface{} `json:"blackboard"`
 	CurrentPath []int       `json:"current_path"`
 	dumpFunc    func(ctx context.Context, n *Node) error
+	ctx         context.Context
 }
 
 type TickType string
@@ -550,4 +551,8 @@ func (ni *NodeInstance) Retry() error {
 
 func (ni *NodeInstance) IsDone() bool {
 	return ni.Root.IsDone()
+}
+
+func (ni *NodeInstance) WithContext(ctx context.Context) {
+	ni.ctx = ctx
 }
