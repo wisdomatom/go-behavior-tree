@@ -556,3 +556,7 @@ func (ni *NodeInstance) IsDone() bool {
 func (ni *NodeInstance) WithContext(ctx context.Context) {
 	ni.ctx = ctx
 }
+
+func (ni *NodeInstance) Context() context.Context {
+	return ni.ctx
+}
