@@ -93,6 +93,9 @@ func DoFuncRegister(doFunc DoFunc) {
 }
 
 func (n *Node) GetDoFunc() DoFunc {
+	if n.DoFunc != nil {
+		return n.DoFunc
+	}
 	doFunc, ok := doFuncMap[n.DoFuncName]
 	if !ok {
 		doFunc = DefaultDoFunc
