@@ -112,6 +112,7 @@ type Node struct {
 	DoFunc             DoFunc                 `json:"-"`
 	Tick               behaviortree.Tick      `json:"-"`
 	Error              error                  `json:"-"`
+	ID                 string                 `json:"id,omitempty"`
 	PreCheckExpression string                 `json:"pre_check_expression,omitempty"`
 	DoFuncName         string                 `json:"do_func_name,omitempty"`
 	TickType           TickType               `json:"tick_type,omitempty"`
