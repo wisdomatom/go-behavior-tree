@@ -204,6 +204,7 @@ func (n *Node) IsDone() bool {
 
 	if !n.PreRunCheck() {
 		// precheck passed, the node should not be executed
+		n.Status = behaviortree.Success
 		return true
 	}
 
