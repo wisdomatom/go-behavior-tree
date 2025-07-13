@@ -126,23 +126,23 @@ type Node struct {
 	LocalBlackboard    map[string]interface{} `json:"local_blackboard,omitempty"`
 }
 
-func (n *Node) PreRunCheck() bool {
+func (n *Node) PreRunCheck() *bool {
 	if n.preCheckExpression == nil {
-		return true
+		return nil
 	}
 	if n.instance.Blackboard == nil {
-		return true
+		return nil
 	}
 	bts, err := json.Marshal(n.instance.Blackboard)
 	if err != nil {
 		n.PushOutput(fmt.Sprintf("PreRunCheck error: %s", err.Error()))
-		return true
+		return nil
 	}
 	var bb map[string]interface{}
 	err = json.Unmarshal(bts, &bb)
 	if err != nil {
 		n.PushOutput(fmt.Sprintf("PreRunCheck error: %s", err.Error()))
-		return true
+		return nil
 	}
 	iter := n.preCheckExpression.Run(bb)
 	for {
@@ -154,9 +154,9 @@ func (n *Node) PreRunCheck() bool {
 		if !ok {
 			break
 		}
-		return run
+		return &run
 	}
-	return true
+	return nil
 }
 
 func isAscendingTraversal(pathA, pathB []int) bool {
@@ -202,7 +202,8 @@ func (n *Node) IsDone() bool {
 		return true
 	}
 
-	if !n.PreRunCheck() {
+	run := n.PreRunCheck()
+	if run != nil && !*run {
 		// precheck passed, the node should not be executed
 		n.Status = behaviortree.Success
 		return true
